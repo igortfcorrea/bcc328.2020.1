@@ -2,5 +2,5 @@
 
 %token                 EOF
 %token <int>           LITINT
-
+%token				   PLUS
 %%
