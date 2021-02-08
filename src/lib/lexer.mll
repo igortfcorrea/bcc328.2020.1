@@ -10,6 +10,8 @@
 let spaces = [' ' '\t']+
 let digit = ['0'-'9']
 let integer = digit+
+let id = ['a'-'z''A'-'Z']['0'-'9''a'-'z''A'-'Z''_']*
+
 (* add other definitions, if needed *)
 
 rule token = parse
@@ -17,6 +19,20 @@ rule token = parse
   | '\n'              { L.new_line lexbuf; token lexbuf }
   | integer as lxm    { LITINT (int_of_string lxm) }
   | '+'               { PLUS }
+  | "="               { EQ }
+  | '('               { LPAREN }
+  | ')'               { RPAREN }
+  | ','               { COMMA }
+  | "<"               { LT }
+  | "else"            { ELSE }
+  | "then"            { THEN }
+  | "if"              { IF }
+  | "in"              { IN }
+  | "let"             { LET }
+  | id as lxm         { ID (Symbol.symbol lxm) }
+  | "int"             { INT }
+  | "bool"            { BOOL }
+
 
   (* add other lexical rules *)
 
