@@ -13,9 +13,6 @@ let integer = digit+
 let letter = ['a'-'z' 'A'-'Z']
 let underline = '_'
 let identifier = letter (letter | digit | underline)*
-let id = ['a'-'z''A'-'Z']['0'-'9''a'-'z''A'-'Z''_']*
-
-(* add other definitions, if needed *)
 
 rule token = parse
   | spaces            { token lexbuf }
@@ -35,22 +32,5 @@ rule token = parse
   | "let"             { LET }
   | "in"              { IN }
   | identifier as lxm { ID (Symbol.symbol lxm) }
-  | "="               { EQ }
-  | '('               { LPAREN }
-  | ')'               { RPAREN }
-  | ','               { COMMA }
-  | "<"               { LT }
-  | "else"            { ELSE }
-  | "then"            { THEN }
-  | "if"              { IF }
-  | "in"              { IN }
-  | "let"             { LET }
-  | id as lxm         { ID (Symbol.symbol lxm) }
-  | "int"             { INT }
-  | "bool"            { BOOL }
-
-
-  (* add other lexical rules *)
-
   | eof               { EOF }
   | _                 { illegal_character (Location.curr_loc lexbuf) (L.lexeme_char lexbuf 0) }
