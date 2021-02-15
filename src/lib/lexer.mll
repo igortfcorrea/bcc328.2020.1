@@ -19,19 +19,20 @@ rule token = parse
   | '\n'              { L.new_line lexbuf; token lexbuf }
   | integer as lxm    { LITINT (int_of_string lxm) }
   | '+'               { PLUS }
-  | "="               { EQ }
-  | '('               { LPAREN }
-  | ')'               { RPAREN }
-  | ','               { COMMA }
+  | "int"             { INT }
+  | "bool"            { BOOL }
   | "<"               { LT }
   | "else"            { ELSE }
   | "then"            { THEN }
   | "if"              { IF }
   | "in"              { IN }
   | "let"             { LET }
+  | "="               { EQ }
+  | '('               { LPAREN }
+  | ')'               { RPAREN }
+  | ','               { COMMA }
   | id as lxm         { ID (Symbol.symbol lxm) }
-  | "int"             { INT }
-  | "bool"            { BOOL }
+  
 
 
   (* add other lexical rules *)
