@@ -2,6 +2,7 @@
 
 %token                 EOF
 %token <int>           LITINT
+<<<<<<< HEAD
 %token <Symbol.symbol> ID
 %token                 PLUS
 %token                 LT
@@ -22,6 +23,8 @@
 %nonassoc LT
 %left PLUS
 
+=======
+>>>>>>> 3e7343618ab8713ab5d696b11a952fc294f824b0
 %token				   PLUS
 %token                 EQ
 %token                 LPAREN
