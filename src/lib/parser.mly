@@ -2,7 +2,6 @@
 
 %token                 EOF
 %token <int>           LITINT
-<<<<<<< HEAD
 %token <Symbol.symbol> ID
 %token                 PLUS
 %token                 LT
@@ -18,35 +17,27 @@
 %token                 LET
 %token                 IN
 
-%start <Absyn.lfundec> program
+%start <Absyn.lfundecs> program
 
+%nonassoc IN ELSE
 %nonassoc LT
 %left PLUS
 
-=======
->>>>>>> 3e7343618ab8713ab5d696b11a952fc294f824b0
-%token				   PLUS
-%token                 EQ
-%token                 LPAREN
-%token                 RPAREN
-%token                 COMMA
-%token                 LT
-%token                 ELSE
-%token                 THEN
-%token                 IF
-%token                 IN
-%token                 LET
-%token <Symbol.symbol> ID
-%token                 INT
-%token                 BOOL
 %%
 
 program:
-| x=fundec EOF { x }
+| x=nonempty_list(fundec) EOF       { $loc , x }                            
+
+exps:
+| x=separated_nonempty_list(COMMA, exp) { x }    
 
 exp:
-| x=LITINT                { $loc , Absyn.IntExp x }
-| x=exp op=operator y=exp { $loc , Absyn.OpExp (op, x, y) }
+| x=LITINT                          { $loc , Absyn.IntExp x }                
+| x=exp op=operator y=exp           { $loc , Absyn.OpExp (op, x, y) }         
+| x=ID                              { $loc , Absyn.IdExp x }                  
+| IF x=exp THEN y=exp ELSE z=exp    { $loc , Absyn.ConditionalExp (x, y, z) } 
+| x=ID LPAREN y=exps RPAREN         { $loc , Absyn.FunctionCallExp (x,y) }    
+| LET x=ID EQ y=exp IN z=exp        { $loc , Absyn.DeclarationExp (x, y, z) } 
 
 %inline operator:
 | PLUS { Absyn.Plus }
@@ -56,8 +47,8 @@ fundec:
 | x=typeid LPAREN p=typeids RPAREN EQ b=exp { $loc , (x, p, b) }
 
 typeid:
-| INT x=ID   { (Absyn.Int, x) }
-| BOOL x= ID { (Absyn.Bool, x) }
+| INT x=ID   { (Absyn.Int, x) }              
+| BOOL x=ID  { (Absyn.Bool, x) }
 
 typeids:
 | x=separated_nonempty_list(COMMA, typeid) { x }
