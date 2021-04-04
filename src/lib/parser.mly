@@ -22,6 +22,7 @@
 %nonassoc LT
 %left PLUS
 
+%token				   PLUS
 %%
 
 program:

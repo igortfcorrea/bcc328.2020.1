@@ -32,5 +32,8 @@ rule token = parse
   | "let"             { LET }
   | "in"              { IN }
   | identifier as lxm { ID (Symbol.symbol lxm) }
+
+  (* add other lexical rules *)
+
   | eof               { EOF }
   | _                 { illegal_character (Location.curr_loc lexbuf) (L.lexeme_char lexbuf 0) }
