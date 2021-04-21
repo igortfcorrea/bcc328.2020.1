@@ -80,13 +80,13 @@ and get_type_id(type', id) =
 
 and check_type_ids(typeids) =
   match typeids with
-  | [] -> Symbol.empty (* throw error *)
+  | [] -> Symbol.empty 
   | [typeid] -> let (x, t) = get_type_id(typeid) in
                 Symbol.enter x t Symbol.empty
   | typeid :: tail -> let (x, t) = get_type_id(typeid) in
                       let vtable = check_type_ids(tail) in
                       match Symbol.look x vtable with
-                      | Some _ -> Symbol.empty (* throw error *)
+                      | Some _ -> Symbol.empty 
                       | None -> Symbol.enter x t vtable
 
 let rec check_funs(funs, ftable) =
