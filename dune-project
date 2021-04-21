@@ -1,4 +1,4 @@
-(lang dune 2.8)
+(lang dune 2.1)
 
 (generate_opam_files true)
 
@@ -12,4 +12,4 @@
  (synopsis "Experimenting with compiler construction")
  (description "Implementing toy programming languages as activities for an undergraduate course"))
 
-(using menhir 2.1)
+(using menhir 2.0)
